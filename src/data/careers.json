@@ -1,0 +1,121 @@
+{
+  "jobs": [
+    {
+      "id": "CITS-2025-001",
+      "postedOn": "06/02/2025",
+      "title": "Software Engineer",
+      "type": "Full-time",
+      "salary": "$80,000 – $95,000 / year",
+      "location": "Multiple undetermined worksites throughout the U.S.",
+      "headquarters": "Dayton, OH",
+      "duties": "Under limited supervision, analyze, design and implement Business Intelligence solutions using ETL data warehouse and client-server applications; provide expertise during all phases of the SDLC; gather and interpret user requirements and develop technical design and functional requirements; prepare high level and low level design documents from the requirement traceability matrix; create use case diagrams; create mappings and workflows; coordinate the design of software and modify/customize software for client; design, develop and modify software systems, using scientific analysis and engineering models; store, retrieve, and manipulate data for analysis of system capabilities and requirements; prepare test plan, test case design, and risk assessment documents; develop and direct software system testing and validation procedures, and provide QA and UAT support; deploy applications into production environment and provide production support; participate in peer reviews; mentor and provide technical assistance to less experienced team members.",
+      "tools": ["Oracle", "DB2", "MVS", "OS/390", "VSAM", "Informatica", "Endevor", "File-Aid", "Toad", "CICS", "COBOL", "JCL", "SQL"],
+      "requirements": {
+        "education": "Bachelor degree in Computer Science, Engineering, or in a related field of study (will accept equivalent foreign education)",
+        "experience": "Five (5) years of progressive experience as a Software Developer, Programmer, Project Manager, or in a related occupation",
+        "other": "Experience must include work with DB2, MVS, OS/390, VSAM, Endevor, File-Aid, and COBOL; must be willing to travel and relocate."
+      },
+      "applyEmail": "hr@crownits.com"
+    },
+    {
+      "id": "CITS-2025-002",
+      "postedOn": "05/30/2025",
+      "title": "Sr. Programmer Analyst",
+      "type": "Full-time",
+      "salary": "$90,000 – $110,000 / year",
+      "location": "Multiple undetermined worksites throughout the U.S.",
+      "headquarters": "Dayton, OH",
+      "duties": "Under limited supervision, develop, create, and modify moderately complex computer applications using Scrum/Agile and advanced programming theories; gather and interpret functional specifications and user requirements to develop technical design documents; coordinate the design of software and modify/customize software for client use; design, develop and modify software systems, using scientific analysis and mathematical models to predict and measure outcome and consequences of design; develop user interface; develop DAO layer and design patterns to interact with database; store, retrieve, and manipulate data for analysis of system capabilities and requirements; develop and direct software system testing and validation procedures; execute code management, including checking tags and resolving conflicts; track bugs, and perform enhancement and development activities; coordinate production support and maintenance; coordinate installation and monitor functioning.",
+      "tools": ["Windows", "Oracle", "Websphere", "MyEclipse", "Subversion", "Jira", "Core Java", "J2EE", "OEM", "TOAD", "PL/SQL Developer", "SQL*Loader", "Microstrategy", "Data Pump", "Data Guard", ".NET", "RMAN"],
+      "requirements": {
+        "education": "Master degree in Computer Science, Computer Information Systems, or in a related field of study (will accept equivalent foreign education)",
+        "experience": null,
+        "other": "Must be willing to relocate and travel."
+      },
+      "applyEmail": "hr@crownits.com"
+    },
+    {
+      "id": "CITS-2025-003",
+      "postedOn": "04/28/2025",
+      "title": "Sr. Database Administrator",
+      "type": "Full-time",
+      "salary": "$95,000 – $115,000 / year",
+      "location": "Multiple undetermined worksites throughout the U.S.",
+      "headquarters": "Dayton, OH",
+      "duties": "Using independent judgment, administer, test, and install moderately complex computer databases; design and create logical and physical database structures; setup, install, configure, maintain, and troubleshoot Oracle tools and utilities; write and code logical and physical database descriptions, and specify identifiers of database to management system; write scripts to manage user roles and privileges, schedule backups, and manage disk space; install reporting tools and web services; coordinate data migration/data loading from older versions to new versions of databases; perform administration, problem analysis and resolution and active cloning of databases from one server to another; test and troubleshoot new and existing programs and databases, correct errors, and coordinate modifications; analyze and implement advance compression options and backup and recovery solutions; upgrade and clone the database, and perform tuning and monitoring; plan and implement security measures and strategies using backup concepts and options; train users on new systems; install, troubleshoot and maintain web services like Tomcat and Apache; install, troubleshoot and maintain reporting tool.",
+      "tools": ["UNIX", "Windows", "Sun Solaris", "Oracle", "SQL Server", "Apache Server", "IIS", "Tomcat", "RAC", "HTML", "Servlets", "JSTL", "JSP", "JDBC", "CSS", "C/C++", "PHP", "JavaScript", "Web Services"],
+      "requirements": {
+        "education": "Master's degree in Computer Science, Management Information Systems, or in a related field of study",
+        "experience": null,
+        "other": "Must be willing to travel and relocate."
+      },
+      "applyEmail": "hr@crownits.com"
+    },
+    {
+      "id": "CITS-2025-004",
+      "postedOn": "01/28/2025",
+      "title": "Sr. Programmer/Analyst",
+      "type": "Full-time",
+      "salary": "$92,000 – $108,000 / year",
+      "location": "Multiple undetermined worksites throughout the U.S.",
+      "headquarters": "Dayton, OH",
+      "duties": "Under limited supervision, develop, create, and modify complex multi-tiered, distributed and enterprise applications using OOAD; gather and interpret functional specifications and user requirements; coordinate the design, development and modification of software and systems; maintain and enhance existing applications and systems; store, retrieve, and manipulate data to analyze system capabilities and requirements; develop user interface, and integrate UI with Web Services; create reusable custom components; perform technology and performance optimization and develop error reduction procedures; create custom directives and templates, and use compiler to parse the template and initiate the directives; integrate UI and Java components and unit/system test changes against the database; develop and direct additional software system testing and validation procedures, and develop enhancements and modifications; coordinate deployment and monitor functioning; mentor/assist lower level programmers with the above, as necessary.",
+      "tools": ["Windows", "Linux", "UNIX", "Oracle", "MySQL", "TOAD", "SQL", "CVS", "Cairngorm", "Hibernate", "Adobe Flex", "Model-View-Controller Pattern", "SOA Architecture", "REST", "SOAP Web Service", "Java", "JavaScript", "HTML", "JDBC"],
+      "requirements": {
+        "education": "Master degree in Computer Science, Computer Engineering, or in a related field of study (will accept equivalent foreign education)",
+        "experience": "Three (3) years of experience as a Software Developer, Programmer, Systems Analyst, or in a related occupation",
+        "other": "Experience must include work with SQL, MySQL, JDBC, Hibernate, REST, SOAP Web Service, and JavaScript; must be willing to travel and relocate."
+      },
+      "applyEmail": "hr@crownits.com"
+    },
+    {
+      "id": "CITS-2025-005",
+      "postedOn": "01/28/2025",
+      "title": "Software Quality Assurance Analyst and Tester",
+      "type": "Full-time",
+      "salary": "$75,000 – $92,000 / year",
+      "location": "Multiple undetermined worksites throughout the U.S.",
+      "headquarters": "Dayton, OH",
+      "duties": "Develop test designs and scripts for moderately complex business requirements with limited supervision; prepare targeted test data for moderately complex scenarios using business logic and system knowledge; use JIRA to manage and document test cases, bugs, and Agile tasks with accuracy and independence; provide rough estimates for assigned testing tasks during Agile sprint planning meetings; actively participate in team meetings, sprint demos, retrospectives, and product design reviews to contribute QA insights; detect, log, and track software defects independently and communicate impact clearly to development teams; analyze database schemas and write moderately complex SQL queries, including joins and subqueries, to validate backend data; perform end-to-end testing, regression, integration, and sanity testing across environments with increasing autonomy; execute QA checks during production deployments and flag issues proactively; test web services via Swagger and CS-API tools, and begin contributing to API automation using ReadyAPI; use Bitbucket to manage version control and collaborate with developers on automated scripts; provide logs and error reports for issues discovered during testing, offering initial troubleshooting when possible; coordinate testing across multiple environments (e.g., dev, QA, UAT, staging) to ensure cross-system reliability; provide peer support and guidance to junior QA team members as needed.",
+      "tools": ["JIRA", "SQL", "T-SQL", "Swagger", "CS-API", "ReadyAPI", "Bitbucket"],
+      "requirements": {
+        "education": "Master degree in Computer Science, Computer Engineering, Mathematics, or in a related field of study",
+        "experience": "Four (4) years of experience as a Quality Assurance Analyst, Validation Engineer, Software Testing",
+        "other": "Experience must include work with T-SQL, API testing, QA methodologies, test design techniques, and SDLC/STLC principles; must be willing to travel and relocate."
+      },
+      "applyEmail": "hr@crownits.com"
+    }
+  ],
+  "benefits": {
+    "intro": "CrownIT Solutions offers a comprehensive benefits package that includes competitive pay and generous paid time off. We ensure our employees are well-compensated and supported in both their professional and personal lives.",
+    "items": [
+      "Competitive salaries or hourly wage",
+      "7 paid Holidays",
+      "Paid vacation time",
+      "Service awards program",
+      "Employee resource groups"
+    ]
+  },
+  "referral": {
+    "intro": "All current job openings are eligible for the Employee Referral Program.",
+    "bonusRange": "$500–$700",
+    "faqs": [
+      {
+        "question": "Who is eligible to participate?",
+        "answer": "Any employee on CrownIT Solutions, LLC payroll can participate with the exception of back office staff, executive staff and employees in the Human Resources Department, and direct or indirect supervisors of the designated job opening."
+      },
+      {
+        "question": "What positions are bonus eligible?",
+        "answer": "Any full or part-time position that has been posted on the CrownIT Solutions, LLC website is bonus eligible for $500 to $700 based upon the position hired."
+      },
+      {
+        "question": "How do I refer someone?",
+        "answer": "Your referral should complete an Employee Referral Bonus Form and submit it with the application at the time they complete the application for employment — this can be done as late as the new employee's first day of work. Only candidates referred from external sources qualify for the bonus. Anyone who has worked for CrownIT Solutions, LLC within the last twelve months does not qualify as a bonus eligible candidate. This includes regular, student, as well as employees working at CrownIT Solutions, LLC through a temporary agency or as an independent consultant."
+      },
+      {
+        "question": "When do I receive the bonus?",
+        "answer": "You will receive your bonus after the new employee has worked 90 consecutive business days. Both you and the new employee must be employed by CrownIT Solutions, LLC at the time of the bonus payment."
+      }
+    ]
+  }
+}

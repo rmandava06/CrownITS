@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/Logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crown IT Solutions — IT Staffing &amp; Consultancy Services</title>
+    <script>
+      // Restore path from 404.html redirect
+      (function() {
+        var p = window.location.search.match(/[?&]p=([^&]*)/);
+        if (p) {
+          window.history.replaceState(null, null,
+            window.location.pathname.replace(/\/?$/, '/') +
+            decodeURIComponent(p[1]).replace(/~and~/g, '&') +
+            (window.location.search.match(/[?&]q=([^&]*)/) ? '?' + decodeURIComponent(window.location.search.match(/[?&]q=([^&]*)/)[1]).replace(/~and~/g, '&') : '') +
+            window.location.hash
+          );
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

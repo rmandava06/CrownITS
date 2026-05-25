@@ -1,0 +1,6 @@
+/* global reset only — design system lives in App.css */
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: clip; }
+body { margin: 0; overflow-x: clip; }
+#root { min-height: 100vh; }
+img { display: block; max-width: 100%; height: auto; }
