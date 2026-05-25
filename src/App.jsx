@@ -3,7 +3,6 @@ import { Link, NavLink, Route, Routes, useParams } from 'react-router-dom'
 import './App.css'
 import careersData from './data/careers.json'
 import lcaFiles   from './data/lca-files.json'
-import usersData  from './data/users.json'
 import logoUrl    from './assets/Logo.png'
 
 /* ── auth context ─────────────────────────────────────────────── */
@@ -287,6 +286,19 @@ const values = [
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '')
 
+function parseAdminUsers() {
+  const raw = import.meta.env.VITE_ADMIN_USERS
+  if (!raw) return []
+  try {
+    const users = JSON.parse(raw)
+    return Array.isArray(users) ? users : []
+  } catch {
+    return []
+  }
+}
+
+const adminUsers = parseAdminUsers()
+
 /* ── login modal ──────────────────────────────────────────────── */
 function LoginModal({ onClose, onLogin }) {
   const [form, setForm] = useState({ username: '', password: '' })
@@ -329,7 +341,7 @@ function LoginModal({ onClose, onLogin }) {
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
-      const found = usersData.find(
+      const found = adminUsers.find(
         u => u.username === form.username.trim() && u.password === form.password
       )
       if (found) {

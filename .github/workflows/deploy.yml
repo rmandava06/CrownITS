@@ -37,6 +37,7 @@ jobs:
           VITE_GITHUB_REPO: CrownITS
           VITE_GITHUB_BRANCH: main
           VITE_WEB3FORMS_ACCESS_KEY: ${{ secrets.VITE_WEB3FORMS_ACCESS_KEY }}
+          VITE_ADMIN_USERS: ${{ secrets.VITE_ADMIN_USERS }}
         run: npm run build
 
       - name: Upload artifact
