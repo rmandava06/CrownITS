@@ -13,8 +13,8 @@ function useAuth() { return React.useContext(AuthCtx) }
 /* ── github api ───────────────────────────────────────────────── */
 const GH = {
   token : import.meta.env.VITE_GITHUB_TOKEN  || '',
-  owner : import.meta.env.VITE_GITHUB_OWNER  || 'lcyarlagadda',
-  repo  : import.meta.env.VITE_GITHUB_REPO   || 'crownits',
+  owner : import.meta.env.VITE_GITHUB_OWNER  || 'rmandava06',
+  repo  : import.meta.env.VITE_GITHUB_REPO   || 'CrownITS',
   branch: import.meta.env.VITE_GITHUB_BRANCH || 'main',
 }
 const ghBase    = () => `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents`
