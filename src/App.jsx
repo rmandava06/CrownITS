@@ -20,20 +20,23 @@ const GH = {
 const ghBase    = () => `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents`
 const ghHeaders = () => ({ Authorization: `Bearer ${GH.token}`, 'Content-Type': 'application/json' })
 
+function encodeGhPath(path) {
+  return path.split('/').map(encodeURIComponent).join('/')
+}
 async function ghGet(path) {
-  const r = await fetch(`${ghBase()}/${path}`, { headers: ghHeaders() })
+  const r = await fetch(`${ghBase()}/${encodeGhPath(path)}`, { headers: ghHeaders() })
   if (!r.ok) throw new Error(`GitHub GET ${r.status}`)
   return r.json()
 }
 async function ghPut(path, message, b64, sha) {
   const body = { message, content: b64, branch: GH.branch }
   if (sha) body.sha = sha
-  const r = await fetch(`${ghBase()}/${path}`, { method: 'PUT', headers: ghHeaders(), body: JSON.stringify(body) })
+  const r = await fetch(`${ghBase()}/${encodeGhPath(path)}`, { method: 'PUT', headers: ghHeaders(), body: JSON.stringify(body) })
   if (!r.ok) throw new Error(`GitHub PUT ${r.status}`)
   return r.json()
 }
 async function ghDel(path, message, sha) {
-  const r = await fetch(`${ghBase()}/${path}`, {
+  const r = await fetch(`${ghBase()}/${encodeGhPath(path)}`, {
     method: 'DELETE', headers: ghHeaders(),
     body: JSON.stringify({ message, sha, branch: GH.branch }),
   })
@@ -48,6 +51,51 @@ function fileToB64(file) {
     r.onerror = rej
     r.readAsDataURL(file)
   })
+}
+
+function requireGhToken() {
+  if (!GH.token) throw new Error('GitHub token not configured. Add VITE_GITHUB_TOKEN and redeploy.')
+}
+
+const LCA_PDF_EXT = /\.pdf$/i
+const MAX_LCA_MB = 50
+
+function parseLcaFilename(filename) {
+  const base = filename
+    .replace(/-Certified-LCA\.pdf$/i, '')
+    .replace(/\.pdf$/i, '')
+
+  const parts = base.split('_')
+  if (parts.length >= 3) {
+    const role  = parts[0].replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    const state = parts[1].toUpperCase()
+    const year  = parts[2].replace(/-.*$/, '')
+    return {
+      displayName: `${role} \u2014 ${state} ${year}`,
+      state,
+      year: parseInt(year, 10) || 0,
+    }
+  }
+
+  return {
+    displayName: base.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+    state: '',
+    year: 0,
+  }
+}
+
+function sortLcaEntries(entries) {
+  return [...entries].sort((a, b) => b.year - a.year || a.displayName.localeCompare(b.displayName))
+}
+
+async function saveLcaManifest(entries, message) {
+  const data = await ghGet('src/data/lca-files.json')
+  await ghPut(
+    'src/data/lca-files.json',
+    message,
+    b64(JSON.stringify(sortLcaEntries(entries), null, 2)),
+    data.sha,
+  )
 }
 
 /* ── email (Web3Forms) — disabled for now ─────────────────────── */
@@ -1769,15 +1817,94 @@ function ReferralPage() {
 /* ── lca ──────────────────────────────────────────────────────── */
 function LcaPage() {
   useReveal()
-  const [files] = useState(lcaFiles)
+  const { isAdmin } = useAuth()
+  const [files, setFiles]       = useState(lcaFiles)
+  const [uploading, setUploading] = useState(false)
+  const [toast, setToast]       = useState(null)
+
+  function showToast(msg, type = 'success') {
+    setToast({ msg, type })
+    setTimeout(() => setToast(null), 5000)
+  }
+
+  async function handleUpload(e) {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+
+    if (!LCA_PDF_EXT.test(file.name)) {
+      showToast('Only PDF files are allowed.', 'error')
+      return
+    }
+    if (file.size > MAX_LCA_MB * 1024 * 1024) {
+      showToast(`File must be ${MAX_LCA_MB} MB or smaller.`, 'error')
+      return
+    }
+
+    const filename = file.name.trim().replace(/[/\\?%*:|"<>]/g, '-')
+    const exists = files.some(f => f.filename.toLowerCase() === filename.toLowerCase())
+    if (exists && !window.confirm(`"${filename}" already exists. Replace it?`)) return
+
+    setUploading(true)
+    try {
+      requireGhToken()
+
+      let existingSha = null
+      if (exists) {
+        const existing = await ghGet(`public/lca/${filename}`)
+        existingSha = existing.sha
+      }
+
+      const content = await fileToB64(file)
+      await ghPut(`public/lca/${filename}`, `Add LCA: ${filename}`, content, existingSha)
+
+      const entry = { filename, ...parseLcaFilename(filename) }
+      const updated = sortLcaEntries([
+        ...files.filter(f => f.filename.toLowerCase() !== filename.toLowerCase()),
+        entry,
+      ])
+      await saveLcaManifest(updated, `Update LCA manifest: ${filename}`)
+
+      setFiles(updated)
+      showToast(`"${entry.displayName}" uploaded. Site rebuilds in ~1 min.`)
+    } catch (err) {
+      showToast(`Upload failed: ${err.message}`, 'error')
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  async function handleDelete(entry) {
+    if (!window.confirm(`Remove "${entry.displayName}" from the site?`)) return
+
+    setUploading(true)
+    try {
+      requireGhToken()
+
+      const data = await ghGet(`public/lca/${entry.filename}`)
+      await ghDel(`public/lca/${entry.filename}`, `Remove LCA: ${entry.filename}`, data.sha)
+
+      const updated = files.filter(f => f.filename !== entry.filename)
+      await saveLcaManifest(updated, `Remove LCA from manifest: ${entry.filename}`)
+
+      setFiles(updated)
+      showToast(`"${entry.displayName}" deleted. Site rebuilds in ~1 min.`)
+    } catch (err) {
+      showToast(`Delete failed: ${err.message}`, 'error')
+    } finally {
+      setUploading(false)
+    }
+  }
 
   return (
     <>
+      {toast && <div className={`admin-toast admin-toast--${toast.type}`} role="alert">{toast.msg}</div>}
+
       <section className="section-hero section-hero--sm">
         <div className="container">
           <p className="eyebrow" data-reveal>Compliance &amp; Transparency</p>
           <h1 data-reveal>LCA ETA 9035</h1>
-          <p className="hero-sub" data-reveal>{files.length} certified applications</p>
+          <p className="hero-sub" data-reveal>{files.length} certified application{files.length !== 1 ? 's' : ''}</p>
         </div>
       </section>
 
@@ -1787,21 +1914,52 @@ function LcaPage() {
             <p className="body-lg">H1B Certified Labor Condition Applications (ETA 9035)</p>
           </div>
 
+          {isAdmin && (
+            <div className="lca-admin-toolbar">
+              <label className={`lca-upload${uploading ? ' lca-upload--busy' : ''}`}>
+                <input
+                  type="file"
+                  accept="application/pdf,.pdf"
+                  onChange={handleUpload}
+                  disabled={uploading}
+                />
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M8 11V3M8 3L5 6M8 3l3 3M2 13h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                {uploading ? 'Uploading…' : 'Upload LCA PDF'}
+              </label>
+              <p className="lca-admin-hint">PDF only · max {MAX_LCA_MB} MB · saved to GitHub</p>
+            </div>
+          )}
+
           {files.length === 0 ? (
             <p className="lca-empty">No LCA documents published yet.</p>
           ) : (
             <ul className="lca-list">
-              {files.map(({ filename, displayName }) => (
-                <li key={filename} className="lca-list-item">
+              {files.map((entry) => (
+                <li key={entry.filename} className="lca-list-item">
                   <a
                     className="lca-list-link"
-                    href={`${base}/lca/${filename}`}
+                    href={`${base}/lca/${encodeURIComponent(entry.filename)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span className="lca-name">{displayName}</span>
+                    <span className="lca-name">{entry.displayName}</span>
                     <span className="lca-badge">Certified LCA ↗</span>
                   </a>
+                  {isAdmin && (
+                    <button
+                      className="admin-btn admin-btn--danger admin-btn--sm lca-delete-btn"
+                      onClick={() => handleDelete(entry)}
+                      disabled={uploading}
+                      aria-label={`Delete ${entry.displayName}`}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M2 4h12M6 4V2h4v2M13 4l-1 10H4L3 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      Delete
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>
